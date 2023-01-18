@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Events Triggered and Emitted</title>
+  </head>
+
+  <body>
+    <h1>Events Triggered and Emitted</h1>
+
+    <h2>Exercise Overview</h2>
+
+    <p>
+      In this exercise you are going to implement a dice rolling application that counts totals for each number rolled and also the total count of dice rolls. The application should update the counts after each roll and also update the dice rolling button to
+      show the latest value rolled. The animated image below shows how your solution should act like when dice rolling button is clicked repeatedly:
+    </p>
+
+    <img src="index.gif" alt="example">
+
+    <h2>Implementing the Exercise</h2>
+
+    <p>
+      Start by making sure you are in your local clone of the Git repository, and in its
+      <em>exercises/05_javascript/5.4-events-triggered-and-emitted</em> directory where this
+      <em>instructions.html</em> file is located.
+    </p>
+
+    <p>
+      In this exercise you are going to revise your knowledge on event listeners. You have already used event listeners in exercises 3.5 and 3.6 but this time your task is to listen and react to a custom event. You can learn more about custom events from
+      <a href="https://youtu.be/b469-2H9Rew">this YouTube video</a>.
+    </p>
+
+    <p>
+      This time you will create an application that keeps track of individual dice rolls. The function
+      <code>rollDice()</code> for dice rolling is provided and it will trigger a custom event
+      <code>rollDice</code> on <code>document</code> every time it is called. You can get the value of the roll with
+      <code>event.detail.value</code> inside your code. The custom event will have the value of the dice roll included and your task is to listen to the event and update the HTML according to the value.
+    </p>
+
+    <ul>
+      <li>Write your code into <em>custom-events.js</em> file inside this directory.</li>
+      <li>
+        You can find the HTML in the <em>index.html</em> file inside this directory. Open this file in your browser. Open the developer console too so that you will see any errors in your code. <strong>DO NOT EDIT THIS
+          FILE!</strong>
+      </li>
+      <li>
+        Add a listener for the <code>click</code> event on the <em>roll-button</em> button and call the
+        <code>rollDice()</code> function once on every click.
+      </li>
+      <li>
+        Listen to the custom <code>rollDice</code> event triggered on the
+        <code>document</code> whenever the <code>rollDice()</code> function is called. Inspect the triggered event and pick up the current value of the roll and update
+        <strong>the appropriate counters</strong> and the <strong>button value</strong>. Use the template tags inside the HTML and choose appropriate HTML for the button contents based on the latest roll. You can do everything inside a single event listener
+        function but that would be quite a complicated and large function and therefore it is not the ideal way to handle things. You should create separate event listeners to handle every counter and the button individually. Remember that every event
+        can have multiple listeners and they are all called when the event is triggered.
+      </li>
+      <li>
+        Every time you are ready to test your code follow these steps:
+        <ol>
+          <li>save your code</li>
+          <li>reload the <em>index.html</em> page</li>
+          <li>click the dice button</li>
+          <li>
+            If something went wrong you are likely to see some error messages inside the developer console. Fix the errors and try again from the first step.
+          </li>
+          <li>
+            If everything works as expected your counters should update based on the dice rolls and the button contents should reflect the latest roll. Repeat the roll a few times and see if everything is still updating correctly. <strong>Congratulations!</strong>
+          </li>
+        </ol>
+      </li>
+    </ul>
+
+    <p>The grader will try to roll dice 100 times.</p>
+
+    <h3>Hints</h3>
+
+    <ul>
+      <li>
+        Counter values and dice rolls are numbers but the values inside the DOM are strings. Unless your code has separate variables to keep track of the totals you should convert the values from the DOM back to numbers before attempting to do any calculations
+        with them. Also comparing numbers with strings can give unexpected results if you are not careful.
+      </li>
+      <li>
+        When updating the button contents with the last rolled dice you should <strong>replace</strong> the button contents with the contents of the appropriate template. You can also set the
+        <code>button.innerHTML</code> to empty string and then append the new contents into it to achieve the same end result.
+      </li>
+      <li>Remember to clone the template contents when updating the button.</li>
+    </ul>
+
+    <p>
+      <strong>Remember to commit <em>custom-events.js</em> and push the changes to your Git repository
+        before you submit your work in Plussa.</strong>
+    </p>
+  </body>
+
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Cross-Origin Resource Sharing (CORS)</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Cross-Origin Resource Sharing (CORS)</h1>
+    <h2>Exercise overview</h2>
+    <p>In this exercise you get to write a server that implements the very basics needed for <abbr title="Cross Origin Resource Sharing">CORS</abbr>, such as sending the right headers with the response to browser's requests. You can read more about CORS
+      from the course materials, or you can go straight to the source and read <a href="https://fetch.spec.whatwg.org/#http-cors-protocol">WHATWG's Fetch
+        Living Standard section about CORS</a>.</p>
+
+    <p>In this exercise you will implement the server for so called <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Simple_requests">simple client requests</a> that do
+      <em>NOT</em> require <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Preflighted_requests">preflight</a>. More details in the following <em>Implementing the exercise</em> section.
+    </p>
+
+    <h2>Implementing the exercise</h2>
+    <p>Start by making sure you are in your local clone of the Git repository, and in its
+      <em>exercises/07_security/7.2-server-side-cors</em> directory where this instructions.html file is placed. Then:
+    </p>
+    <ul>
+      <li>Write your server code in to the <em>index.js</em> file in this directory</li>
+      <li>Write your code based on the TODOs in the index.js and these instructions</li>
+      <li>Run your server by running the command <em>node index.js</em> in this directory</li>
+      <li>With your server running, open a new, empty tab in Chrome (or Chromium) browser. Open the <a href="https://developers.google.com/web/tools/chrome-devtools">Chrome's DevTools</a>. Enter the following code into Console in DevTools:
+        <pre>
+                fetch('http://localhost:3000', {
+                    method: 'GET',
+                    mode: 'cors'
+                })
+                .then(response => response.text())
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch(err => console.log(err))
+            </pre> You should receive the following error: <em>"Access to fetch at 'http://localhost:3000/' from origin
+          'chrome-search://local-ntp' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is
+          present on the requested resource. If an opaque response serves your needs, set the request's mode to
+          'no-cors' to fetch the resource with CORS disabled."</em>
+      </li>
+    </ul>
+
+    <p>To enable CORS and get rid of the error you must modify your Node server: </p>
+    <ol>
+      <li>Check that the Origin header is set in the client's request. If it is not, immediately send a response with status code 400 and message body "Origin header not in the request". Notice: Origin header is automatically set with Chrome DevTools when
+        using fetch.
+      </li>
+      <li>In the server-side set the CORS headers for your response that enable the following three functions
+        <ul>
+          <li>Allow access to the server's resources from <em>all</em> origins with
+            <em>Access-Control-Allow-Origin</em> header
+          </li>
+          <li>Allow only the HTTP methods that are used for simple CORS requests with
+            <em>Access-Control-Allow-Methods</em> headr
+          </li>
+          <li>Allow the CORS information to be cached for two (2) hours with <em>Access-Control-Max-Age</em> header
+          </li>
+        </ul>
+      </li>
+      <li>For client requests' that use the HEAD HTTP method, send a response that has the CORS headers as described above, and status code 200</li>
+      <li>Reply requests using either GET or POST HTTP method with the response that has the CORS headers as described above, status code 200, and message body 'I was requested using CORS!'
+      </li>
+      <li>If any other HTTP method was used, send a response with status code 405, the CORS headers, and body "Request used a HTTP method which is not allowed."</li>
+      <li>You can test your server by resending the fetch requests from the Chrome DevTools console, until you get the wanted results
+      </li>
+    </ol>
+
+    <ul>
+      <li>Correct all possible mistakes</li>
+      <li>Commit your index.js file, and push it to your Git repository.</li>
+      <li>Submit your work in Plussa</li>
+    </ul>
+  </body>
+
+</html>
