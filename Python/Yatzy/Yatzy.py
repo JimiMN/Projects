@@ -1,7 +1,7 @@
 import random
 import re
 import time
-from collections import Counter
+from operator import countOf
 
 # Class for players
 class Player:
@@ -83,16 +83,16 @@ def throw_dice(dices, throwing = ['1','2','3','4','5']):
     # Print the values and use sleep to increase tension
     print()
     print("1st dice: " + str(dices["1"]))
-    time.sleep(0.5)
+    time.sleep(0.25)
     print("2nd dice: " + str(dices["2"]))
-    time.sleep(0.5)
+    time.sleep(0.25)
     print("3rd dice: " + str(dices["3"]))
-    time.sleep(0.5)
+    time.sleep(0.25)
     print("4th dice: " + str(dices["4"]))
-    time.sleep(0.5)
+    time.sleep(0.25)
     print("5th dice: " + str(dices["5"]))
     print()
-    time.sleep(0.5)
+    time.sleep(0.25)
     
     return dices
 
@@ -207,6 +207,41 @@ def sum_of_dices(dices, numbers='0'):
 
     return sum
 
+def check_for_pair(dices):
+
+    for i in range(1,6):
+
+        if countOf(dices.values(), i) > 1:
+
+            return True
+
+def check_for_two_pairs(dices):
+
+    sum = 0
+    count_of_pairs = 0
+
+    for i in range(1,6):
+
+        # 4 or more of the same
+        if countOf(dices.values(), i) >= 4:
+            
+            sum = i * 4
+            return sum
+
+        # Found pair
+        elif countOf(dices.values(), i) > 1:
+
+            sum += i * 2
+            count_of_pairs += 1
+
+    if count_of_pairs == 2:
+
+        return sum
+    
+    else:
+
+        return 0
+
 def category_score(dices, category, number):
 
     count1 = 0
@@ -214,38 +249,26 @@ def category_score(dices, category, number):
     number_to_check = 0
     value = 0
 
+    # Check for empty string
+    if number != "":
+
+        number = int(number)
+
     # One pair
     if category == "7":
 
-        for key in dices:
+        if check_for_pair:
 
-            if dices[key] == number:
-
-                count1 += 1
-
-        if count1 < 2:
-
-            return 0
+            return number * 2
         
         else:
 
-            return number * 2
+            return 0
         
     # Two Pairs
     elif category == "8":
 
-        dice_counts = Counter(dices.values())
-
-        pairs = [key for key, count in dice_counts.items() if count == 2]
-
-        if len(pairs) == 2:
-
-            sum_of_pairs = sum(int(key) for key in pairs) * 2
-            return sum_of_pairs
-        
-        else:
-
-            return 0
+        return check_for_two_pairs(dices)
 
 
     # Three of a Kind
@@ -455,7 +478,7 @@ def game_over(player1, player2):
 
     for key in player1.get_scores:
 
-        if(player2.get_scores[key] == "-" and key != "Bonus"):
+        if(player2.get_scores[key] == 0 and key != "Bonus"):
 
             return False
 
@@ -486,7 +509,7 @@ def scoreboard(player1, player2):
 
             #print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]))
 
-        print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]).replace("0", "-"))
+        print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]))
 
         if(category == "Sixes" or category == "Chance" or category == "Bonus"):
 
