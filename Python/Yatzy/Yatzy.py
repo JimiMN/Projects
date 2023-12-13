@@ -6,138 +6,67 @@ class Player:
     
         self.__name = name
         self.__scores = {
-            "ones"            : "-",
-            "twos"            : "-",
-            "threes"          : "-",
-            "fours"           : "-",
-            "fives"           : "-",
-            "sixes"           : "-",
-            "total1"          : "-",
-            "bonus"           : "-",
-            "three of a kind" : "-",
-            "four of a kind"  : "-",
-            "full house"      : "-",
-            "small straight"  : "-",
-            "large straight"  : "-",
-            "yatzy"           : "-",
-            "chance"          : "-",
-            "total2"          : "-",
+            "Ones"            : "-",
+            "Twos"            : "-",
+            "Threes"          : "-",
+            "Fours"           : "-",
+            "Fives"           : "-",
+            "Sixes"           : "-",
+            "Sum"             : "-",
+            "Bonus"           : "-",
+            "Three of a Kind" : "-",
+            "Four of a Kind"  : "-",
+            "Full House"      : "-",
+            "Small Straight"  : "-",
+            "Large Straight"  : "-",
+            "Yatzy"           : "-",
+            "Chance"          : "-",
+            "Total"           : "-",
         }
 
-    # Get function for everything on the scoreboard
-    def get_ones(self):
-        
-        return self.__scores["ones"]
+    # Get method for scores 
+    def get_scores(self):
 
-    def get_twos(self):
+        return self.__scores
 
-        return self.__scores["twos"]
+    # Get player's name
+    def get_name(self):
+
+        return self.__name
+
+
+# Printing scoreboard
+def scoreboard(player1, player2):
+
+    categories = ["Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Sum", "Bonus",
+                  "Three of a Kind", "Four of a Kind", "Full House", "Small Straight",
+                  "Large Straight", "Yatzy", "Chance", "Total"]
     
-    def get_threes(self):
-    
-        return self.__scores["threes"]
 
-    def get_fours(self):
+    print("_" * 69)
+    print("| {:^66} |".format("SCOREBOARD"))
+    print("| {:<20} | {:^20} | {:^20} |".format("Category", player1.get_name(), player2.get_name()))
+    print("|" + "-" * 68 + "|")
 
-        return self.__scores["fours"]
-    
-    def get_fives(self):
+    for category in categories:
 
-        return self.__scores["fives"]
-    
-    def get_sixes(self):
+        print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]))
 
-        return self.__scores["sixes"]
-    
-    def get_total1(self):
+        if(category == "Sixes" or category == "Chance" or category == "Bonus"):
 
-        return self.__scores["total1"]
-    
-    def get_total(self):
+            print("|" + "-" * 68 + "|")
 
-        if (self.__scores["total1"] >= 63 ):
-
-            return 50
-        
-        else:
-
-            return 0
-
-    def get_three_of_a_kind(self):
-        
-        return self.__scores["three of a kind"]
-    
-    def get_four_of_a_kind(self):
-
-        return self.__scores["four of a kind"]
-    
-    def get_full_house(self):
-        
-        return self.__scores["full house"]
-
-    def get_small_straight(self):
-
-        return self.__scores["small straight"]
-
-    def get_large_straight(self):
-
-        return self.__scores["large straight"]
-    
-    def get_yatzy(self):
-
-        return self.__scores["yatzy"]
-    
-    def get_chance(self):
-
-        return self.__scores["chance"]
-    
-    def get_total2(self):
-
-        sum = 0
-
-        for key in self.__scores:
-
-            if(self.__scores[key] != "-"):
-
-                sum = sum + self.__scores[key]
-
-        self.__scores["total2"] = sum
-
-        return self.__scores["total2"]
-            
-
-# Make the initial scoreboard
-def initialize_scoreboard():
-
-    print("--------------SCOREBOARD--------------")
-    print("--------------------------------------")
-    print("--------------Player1-|-Player2-------")
-    print("Ones: \t\thalo \t halo")
-    print("Twos: \t\thalo \t halo")
-    print("Threes: \thalo \t halo")
-    print("Fours: \t\thalo \t halo")
-    print("Fives: \t\thalo \t halo")
-    print("Sixes: \t\thalo \t halo")
-    print("Total: \t\thalo \t halo")
-    print("Bonus: \t\thalo \t halo")
-    print("Three of a Kind: \t\thalo \t halo")
-    print("Four of a Kind: \t\thalo \t halo")
-    print("Full House: \t\thalo \t halo")
-    print("Small Straight: \t\thalo \t halo")
-    print("Large Straight: \t\thalo \t halo")
-    print("Yatzy: \t\thalo \t halo")
-    print("Chance: \t\thalo \t halo")
-    print("Total: \t\thalo \t halo")
+    print("|" + "_" * 68 + "|")
 
 def main():
 
     player1_name = input("Player1 name: ")
     player2_name = input("Player2 name: ")
 
-    Player(player1_name)
-    Player(player2_name)
+    player1 = Player(player1_name)
+    player2 = Player(player2_name)
 
-    initialize_scoreboard()
+    scoreboard(player1, player2)
 
 if __name__ == "__main__":
     main()
