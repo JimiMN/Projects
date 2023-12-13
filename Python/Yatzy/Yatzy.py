@@ -56,15 +56,10 @@ class Player:
             self.__scores[str(category)] = value
             self.__scores["Total"] += int(value)
 
-            # Check if the category affects sum
-            if(str(category) == "Ones" or "Twos" or "Threes" or "Fours" or "Fives" or "Sixes"):
+            # Check for bonus
+            if(self.__scores["Sum"] >= 63):
 
-                self.__scores["Sum"] += int(value)
-
-                # Check for bonus
-                if(self.__scores["Sum"] >= 63):
-
-                    self.update_score("Bonus", 50)
+                self.update_score("Bonus", 50)
         
         return 0
 
@@ -72,6 +67,22 @@ class Player:
     def check_category_score(self, category):
 
         return self.__scores[category]
+    
+    def update_sum(self):
+
+        sum = 0
+
+        sum += self.check_category_score("Ones")
+        sum += self.check_category_score("Twos")
+        sum += self.check_category_score("Threes")
+        sum += self.check_category_score("Fours")
+        sum += self.check_category_score("Fives")
+        sum += self.check_category_score("Sixes")
+
+        self.__scores["Sum"] = sum
+
+        return 0
+
 
 def throw_dice(dices, throwing = ['1','2','3','4','5']):
 
@@ -472,7 +483,7 @@ def game(player1, player2):
                         input_string = ""
 
         turn = 1 if turn == 0 else 0
-
+        player_in_turn.update_sum()
 
 def game_over(player1, player2):
 
