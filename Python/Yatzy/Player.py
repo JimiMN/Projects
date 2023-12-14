@@ -73,12 +73,30 @@ class Player:
 
         sum = 0
 
-        sum += self.check_category_score("Ones")
-        sum += self.check_category_score("Twos")
-        sum += self.check_category_score("Threes")
-        sum += self.check_category_score("Fours")
-        sum += self.check_category_score("Fives")
-        sum += self.check_category_score("Sixes")
+        # Check that value isnt "X"
+        if self.check_category_score("Ones") != "X":
+
+            sum += self.check_category_score("Ones")
+
+        if self.check_category_score("Twos") != "X":
+
+            sum += self.check_category_score("Twos")
+
+        if self.check_category_score("Threes") != "X":
+
+            sum += self.check_category_score("Threes")
+
+        if self.check_category_score("Fours") != "X":
+
+            sum += self.check_category_score("Fours")
+
+        if self.check_category_score("Fives") != "X":
+
+            sum += self.check_category_score("Fives")
+
+        if self.check_category_score("Sixes") != "X":
+
+            sum += self.check_category_score("Sixes")
 
         self.__scores["Sum"] = sum
 

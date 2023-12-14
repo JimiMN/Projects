@@ -2,7 +2,7 @@
 This file is for testing Yatzy.py, Category_scores.py and Player.py
 """
 
-import Category_scores
+import category_scores
 import Yatzy
 import Player
 import unittest

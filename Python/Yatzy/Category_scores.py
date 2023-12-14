@@ -2,8 +2,8 @@
 This file is for calculating scores in different situations
 
 """
-
 from operator import countOf
+
 
 def number_scores(dices, number):
 
