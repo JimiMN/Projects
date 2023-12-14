@@ -5,7 +5,7 @@ This file consists of the core game for Yatzy
 import random
 import re
 import time
-import Category_scores
+import category_scores
 from Player import Player
 
 
@@ -127,79 +127,79 @@ def category_handler(dices, category):
     # Ones
     if category == "1":
 
-        return Category_scores.number_scores(dices, 1)
+        return category_scores.number_scores(dices, 1)
     
     # Twos
     elif category == "2":
 
-        return Category_scores.number_scores(dices, 2)
+        return category_scores.number_scores(dices, 2)
     
     # Threes
     elif category == "3":
 
-        return Category_scores.number_scores(dices, 3)
+        return category_scores.number_scores(dices, 3)
     
     # Fours
     elif category == "4":
 
-        return Category_scores.number_scores(dices, 4)
+        return category_scores.number_scores(dices, 4)
     
     # Fives
     elif category == "5":
 
-        return Category_scores.number_scores(dices, 5)
+        return category_scores.number_scores(dices, 5)
     
     # Sixes
     elif category == "6":
 
-        return Category_scores.number_scores(dices, 6)
+        return category_scores.number_scores(dices, 6)
 
     # One pair
     if category == "7":
 
-        return Category_scores.one_pair(dices)
+        return category_scores.one_pair(dices)
         
     # Two Pairs
     elif category == "8":
 
-        return Category_scores.two_pairs(dices)
+        return category_scores.two_pairs(dices)
 
 
     # Three of a Kind
     elif category == "9":
 
-        return Category_scores.three_of_a_kind(dices)
+        return category_scores.three_of_a_kind(dices)
 
     # Four of a Kind
     elif category == "10":
 
-        return Category_scores.four_of_a_kind(dices)
+        return category_scores.four_of_a_kind(dices)
 
     # Full House
     elif category == "11":
 
-        return Category_scores.full_house(dices)
+        return category_scores.full_house(dices)
 
     # Small Straight
     elif category == "12":
 
-        return Category_scores.small_straight(dices)
+        return category_scores.small_straight(dices)
             
 
     # Large Straight
     elif category == "13":
 
-        return Category_scores.large_straight(dices)
+        return category_scores.large_straight(dices)
 
     # Yatzy
     elif category == "14":
 
-        return Category_scores.yatzy(dices)
+        return category_scores.yatzy(dices)
 
     # Chance
     elif category == "15":
 
-        return Category_scores.chance(dices)
+        return category_scores.chance(dices)
 
 # Core how the game works
 def game(player1, player2):

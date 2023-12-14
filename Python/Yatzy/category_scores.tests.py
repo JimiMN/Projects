@@ -22,6 +22,12 @@ class Test_category_scores(unittest.TestCase):
                   "3" : 5,
                   "4" : 5,
                   "5" : 6}
+
+        dices3 = {"1" : 5,
+                  "2" : 1,
+                  "3" : 6,
+                  "4" : 5,
+                  "5" : 6}
         
         # Test Ones
         result = Yatzy.category_handler(dices1, '1')
@@ -41,6 +47,10 @@ class Test_category_scores(unittest.TestCase):
 
         # Test Fives
         result = Yatzy.category_handler(dices2, '5')
+        self.assertEqual(result, 10)
+
+        # Bug with 2 fives giving 15 instead of 10
+        result = Yatzy.category_handler(dices3, '5')
         self.assertEqual(result, 10)
 
         # Test Sixes
@@ -162,7 +172,7 @@ class Test_category_scores(unittest.TestCase):
                   "5" : 6}
         
         dices2 = {"1" : 2,
-                  "2" : 2,
+                  "2" : 6,
                   "3" : 2,
                   "4" : 6,
                   "5" : 6}
@@ -173,14 +183,14 @@ class Test_category_scores(unittest.TestCase):
         self.assertEqual(result, 0)
 
         result = Yatzy.category_handler(dices2, '11')
-        self.assertEqual(result, 18)
+        self.assertEqual(result, 22)
 
         # Test Chance
         result = Yatzy.category_handler(dices1, '15')
         self.assertEqual(result, 20)
 
         result = Yatzy.category_handler(dices2, '15')
-        self.assertEqual(result, 18)       
+        self.assertEqual(result, 22)       
 
 
 if __name__ == '__main__':

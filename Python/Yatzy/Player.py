@@ -60,7 +60,7 @@ class Player:
         # Check for bonus
         if(self.__scores["Sum"] >= 63):
 
-            self.update_score("Bonus", 50)
+            self.__scores["Bonus"] = 50
         
         return 0
 
