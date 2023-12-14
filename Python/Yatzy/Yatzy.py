@@ -1,87 +1,12 @@
+"""
+This file consists of the core game for Yatzy
+
+"""
 import random
 import re
 import time
-from operator import countOf
-
-# Class for players
-class Player:
-
-    #Constructor
-    def __init__(self, name):
-    
-        self.__name = name
-        self.__scores = {
-            "Ones"            : 0,
-            "Twos"            : 0,
-            "Threes"          : 0,
-            "Fours"           : 0,
-            "Fives"           : 0,
-            "Sixes"           : 0,
-            "Sum"             : 0,
-            "Bonus"           : 0,
-            "One Pair"        : 0,
-            "Two Pairs"       : 0,
-            "Three of a Kind" : 0,
-            "Four of a Kind"  : 0,
-            "Full House"      : 0,
-            "Small Straight"  : 0,
-            "Large Straight"  : 0,
-            "Yatzy"           : 0,
-            "Chance"          : 0,
-            "Total"           : 0,
-        }
-
-    # Get method for scores 
-    def get_scores(self):
-
-        return self.__scores
-
-    # Get method for player's name
-    def get_name(self):
-
-        return self.__name
-
-    # Method for updating a particular score
-    def update_score(self, category, value):
-        
-        #Check if the value is 0
-        if(value == 0):
-
-            value = 'X'
-            self.__scores[str(category)] = value
-
-        else:
-
-            # Update the category and total for the player
-            self.__scores[str(category)] = value
-            self.__scores["Total"] += int(value)
-
-            # Check for bonus
-            if(self.__scores["Sum"] >= 63):
-
-                self.update_score("Bonus", 50)
-        
-        return 0
-
-    # Returns a specified category's score
-    def check_category_score(self, category):
-
-        return self.__scores[category]
-    
-    def update_sum(self):
-
-        sum = 0
-
-        sum += self.check_category_score("Ones")
-        sum += self.check_category_score("Twos")
-        sum += self.check_category_score("Threes")
-        sum += self.check_category_score("Fours")
-        sum += self.check_category_score("Fives")
-        sum += self.check_category_score("Sixes")
-
-        self.__scores["Sum"] = sum
-
-        return 0
+import Category_scores
+from Player import Player
 
 
 def throw_dice(dices, throwing = ['1','2','3','4','5']):
@@ -160,18 +85,7 @@ def choose_category(player_in_turn, dices):
             if(player_in_turn.check_category_score(category) == 0):
 
                 valid_input = True
-
-                if(int(chosen_category) > 6):
-
-                    print("Which number do you choose for {}?".format(category))
-                    print("For straights you can leave this empty")
-                    print("For Full House give the number that appears 3 times")
-                    number = input("If the number doesn't matter press Enter: ")
-                    value = category_score(dices, chosen_category, number)
-
-                else:
-                    value = sum_of_dices(dices, chosen_category)
-                    
+                value = category_handler(dices, chosen_category)
                 player_in_turn.update_score(category, value)
                 return 0
             
@@ -206,222 +120,86 @@ def string_handler(input_string):
 
     return throw_list
 
-def sum_of_dices(dices, numbers='0'):
 
-    sum = 0
 
-    for key in dices:
+def category_handler(dices, category):
 
-        if(str(dices[key]) == numbers):
+    # Ones
+    if category == "1":
 
-            sum += dices[key]
-
-    return sum
-
-def check_for_pair(dices):
-
-    for i in range(1,6):
-
-        if countOf(dices.values(), i) > 1:
-
-            return True
-
-def check_for_two_pairs(dices):
-
-    sum = 0
-    count_of_pairs = 0
-
-    for i in range(1,6):
-
-        # 4 or more of the same
-        if countOf(dices.values(), i) >= 4:
-            
-            sum = i * 4
-            return sum
-
-        # Found pair
-        elif countOf(dices.values(), i) > 1:
-
-            sum += i * 2
-            count_of_pairs += 1
-
-    if count_of_pairs == 2:
-
-        return sum
+        return Category_scores.number_scores(dices, 1)
     
-    else:
+    # Twos
+    elif category == "2":
 
-        return 0
+        return Category_scores.number_scores(dices, 2)
+    
+    # Threes
+    elif category == "3":
 
-def category_score(dices, category, number):
+        return Category_scores.number_scores(dices, 3)
+    
+    # Fours
+    elif category == "4":
 
-    count1 = 0
-    count2 = 0
-    number_to_check = 0
-    value = 0
+        return Category_scores.number_scores(dices, 4)
+    
+    # Fives
+    elif category == "5":
 
-    # Check for empty string
-    if number != "":
+        return Category_scores.number_scores(dices, 5)
+    
+    # Sixes
+    elif category == "6":
 
-        number = int(number)
+        return Category_scores.number_scores(dices, 6)
 
     # One pair
     if category == "7":
 
-        if check_for_pair:
-
-            return number * 2
-        
-        else:
-
-            return 0
+        return Category_scores.one_pair(dices)
         
     # Two Pairs
     elif category == "8":
 
-        return check_for_two_pairs(dices)
+        return Category_scores.two_pairs(dices)
 
 
     # Three of a Kind
     elif category == "9":
 
-        for key in dices:
-
-            if dices[key] == number:
-
-                count1 += 1
-
-        if count1 >= 3:
-
-            return number * 3
-        
-        else:
-
-            return 0
+        return Category_scores.three_of_a_kind(dices)
 
     # Four of a Kind
     elif category == "10":
 
-        for key in dices:
-
-            if dices[key] == number:
-
-                count1 += 1
-
-        if count1 >= 4:
-
-            return number * 4
-        
-        else:
-
-            return 0
+        return Category_scores.four_of_a_kind(dices)
 
     # Full House
     elif category == "11":
 
-        for key in dices:
-
-            if dices[key] == number:
-
-                count1 += 1
-
-            else:
-                
-                if number_to_check == 0:
-
-                    number_to_check = dices[key]
-                    count2 += 1
-                
-                else:
-                    
-                    if(number_to_check == number):
-
-                        count2 += 1
-
-                    else:
-
-                        return 0
-        
-        if count1 == 3 and count2 == 2:
-
-            value = (number * 3) + (number_to_check * 2)
-
-            return value
+        return Category_scores.full_house(dices)
 
     # Small Straight
     elif category == "12":
 
-        for i in range(1,7):
-
-            count1 = 0
-
-            for key in dices:
-
-                if dices[key] == i:
-                    
-                    # 6 is not a part of Small Straight
-                    if dices[key] == 6:
-
-                        return 0
-                    
-                    count1 += 1
-
-            if count1 > 1:
-
-                return 0
-            
-        return 15
+        return Category_scores.small_straight(dices)
             
 
     # Large Straight
     elif category == "13":
 
-        for i in range(1,7):
-
-            count1 = 0
-
-            for key in dices:
-
-                if dices[key] == i:
-                    
-                    # 1 is not a part of Large Straight
-                    if dices[key] == 1:
-
-                        return 0
-                    
-                    count1 += 1
-
-            if count1 > 1:
-
-                return 0
-            
-        return 20
+        return Category_scores.large_straight(dices)
 
     # Yatzy
     elif category == "14":
 
-        for key in dices:
-
-            if number_to_check == 0:
-
-                number_to_check = dices[key]
-
-            if dices[key] != number_to_check:
-
-                return 0
-
-        return 50
+        return Category_scores.yatzy(dices)
 
     # Chance
     elif category == "15":
 
-        value = 0
-
-        for key in dices:
-
-            value += dices[key]
-
-        return value
+        return Category_scores.chance(dices)
 
 # Core how the game works
 def game(player1, player2):
@@ -510,15 +288,6 @@ def scoreboard(player1, player2):
     print("|" + "-" * 68 + "|")
 
     for category in categories:
-
-        # Added so that 20 isn't replaced with 2- etc.
-        #if (player1.check_category_score(category) == 0 and player2.check_category_score(category) == 0):
-
-            #print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]).replace("0", "-"))
-
-        #else:
-
-            #print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]))
 
         print("| {:<20} | {:^20} | {:^20} |".format(category, player1.get_scores()[category], player2.get_scores()[category]))
 
