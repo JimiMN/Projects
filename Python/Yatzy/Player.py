@@ -57,10 +57,10 @@ class Player:
             self.__scores[str(category)] = value
             self.__scores["Total"] += int(value)
 
-            # Check for bonus
-            if(self.__scores["Sum"] >= 63):
+        # Check for bonus
+        if(self.__scores["Sum"] >= 63):
 
-                self.update_score("Bonus", 50)
+            self.update_score("Bonus", 50)
         
         return 0
 

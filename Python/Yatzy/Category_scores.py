@@ -17,7 +17,7 @@ def sum_of_dices(dices):
 # Check for pairs
 def check_for_pair(dices):
 
-    for i in range(1,6):
+    for i in range(1,7):
 
         if countOf(dices.values(), i) > 1:
 
@@ -37,7 +37,7 @@ def one_pair(dices):
     
     else:
 
-        for i in range(1,6):
+        for i in range(1,7):
 
             if countOf(dices.values(), i) > 1 and i * 2 > biggest_pair:
 
@@ -53,7 +53,7 @@ def two_pairs(dices):
     found_pair = 0
     count_of_pairs = 0
 
-    for i in range(1,6):
+    for i in range(1,7):
 
         # 4 or more of the same
         if countOf(dices.values(), i) >= 4:
@@ -79,7 +79,7 @@ def two_pairs(dices):
 # Find three of a kind and return sum
 def three_of_a_kind(dices):
 
-    for i in range(1,6):
+    for i in range(1,7):
 
         # If 3 of the same
         if countOf(dices.values(), i) >= 3:
@@ -91,7 +91,7 @@ def three_of_a_kind(dices):
 # Find four of a kind and return sum
 def four_of_a_kind(dices):
 
-    for i in range(1,6):
+    for i in range(1,7):
 
         # If 4 of the same
         if countOf(dices.values(), i) >= 4:
@@ -108,7 +108,7 @@ def full_house(dices):
     # Use set to find unique numbers and check if there 2 or 3 of one
     if len(set(sorted_dices)) == 2 and (sorted_dices.count(sorted_dices[0]) == 2 or 3):
 
-        return sum(sorted_dices)
+        return sum(dices.values())
     
     else:
                 

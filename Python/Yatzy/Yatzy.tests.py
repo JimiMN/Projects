@@ -95,25 +95,27 @@ class Test_category_scores(unittest.TestCase):
                   "4" : 4,
                   "5" : 5}
 
-        dices2 = {"1" : 5,
-                  "2" : 5,
-                  "3" : 5,
-                  "4" : 5,
-                  "5" : 5}
+        dices2 = {"1" : 6,
+                  "2" : 6,
+                  "3" : 6,
+                  "4" : 6,
+                  "5" : 6}
 
         # Test Three of a Kind
         result = Yatzy.category_handler(dices1, '9')
         self.assertEqual(result, 0)
 
         result = Yatzy.category_handler(dices2, '9')
-        self.assertEqual(result, 15)
+        self.assertEqual(result, 18)
+
 
         # Test Four of a Kind
         result = Yatzy.category_handler(dices1, '10')
         self.assertEqual(result, 0)
 
         result = Yatzy.category_handler(dices2, '10')
-        self.assertEqual(result, 20)
+        self.assertEqual(result, 24)
+
 
         # Test Yatzy
         result = Yatzy.category_handler(dices1, '14')
@@ -159,9 +161,9 @@ class Test_category_scores(unittest.TestCase):
                   "4" : 5,
                   "5" : 6}
         
-        dices2 = {"1" : 1,
-                  "2" : 1,
-                  "3" : 1,
+        dices2 = {"1" : 2,
+                  "2" : 2,
+                  "3" : 2,
                   "4" : 6,
                   "5" : 6}
         
@@ -171,14 +173,14 @@ class Test_category_scores(unittest.TestCase):
         self.assertEqual(result, 0)
 
         result = Yatzy.category_handler(dices2, '11')
-        self.assertEqual(result, 15)
+        self.assertEqual(result, 18)
 
         # Test Chance
         result = Yatzy.category_handler(dices1, '15')
         self.assertEqual(result, 20)
 
         result = Yatzy.category_handler(dices2, '15')
-        self.assertEqual(result, 15)       
+        self.assertEqual(result, 18)       
 
 
 if __name__ == '__main__':
