@@ -1,24 +1,25 @@
 <template>
     <div id="box">
-      <!-- Your calendar grid content here -->
-      Calendar Grid Content
+      <ul v-for="n in 31" :key="n">
+        <day :givenDay="n"/>
+      </ul>
     </div>
 </template>
   
 <script setup>
-  // Add any logic for the calendar grid if needed
+    import day from './day.vue';
 </script>
   
 <style scoped>
-  /* Scoped styles for the calendar grid */
+
 #box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color:cyan;
-  border: 1px solid #ccc;
-  width: 340px;
-  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for the days of the week */
+  gap: 5px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: cyan;
 }
 </style>
   
